@@ -1,0 +1,55 @@
+{% load static %}
+<div id="{{ section_id|default:'signup-section' }}"  class="signup-form">
+  <div class="horizontal-signup-left-form">
+    <h1>Sign up to showcase your Art</h1>
+  </div>
+
+  <div class="horizontal-signup-right-form">
+    <form method="POST" action="{% url 'signup' %}">
+      {% csrf_token %}
+
+      <div class="signup-form-words">
+        <h2>Welcome to Solid Forge</h2>
+        <p>Solid ideas. Forged in creativity.</p>
+      </div>
+
+      {% if messages %}
+        {% for message in messages %}
+          <p class="form-message {{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+      {% endif %}
+
+      <div class="input-group">
+        <label for="signupEmail"><b>Email</b></label>
+        <input type="email" placeholder="Email" name="signupEmail" required>
+      </div>
+
+      <div class="input-group">
+        <label for="firstname"><b>First name</b></label>
+        <input type="text" placeholder="First name" name="firstname" required>
+      </div>
+
+      <div class="input-group">
+        <label for="lastname"><b>Last name</b></label>
+        <input type="text" placeholder="Last name" name="lastname" required>
+      </div>
+
+      <div class="input-group">
+        <label for="signupPassword"><b>Password</b></label>
+        <input type="password" placeholder="Password" name="signupPassword" required>
+      </div>
+
+      <div class="input-group">
+        <label for="birthdate">Birthdate:</label>
+        <input type="date" id="birthdate" name="birthdate">
+      </div>
+
+  <p class="hint">Use 8 or more letters, numbers and symbols</p>
+      <button type="submit" id="signup-form-btn">Sign Up</button>
+
+  {% if not user %}
+  <p>Already a member? <a href="#" id="Login-form-btn">Log In</a></p>
+  {% endif %}
+    </form>
+  </div>
+</div>

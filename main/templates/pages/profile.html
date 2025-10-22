@@ -1,0 +1,36 @@
+{% extends 'base-section.html' %}
+{% block content %}
+{% include 'components/navbar-search.html' %}
+
+<div class="profile-container" style="display: flex; gap: 30px; margin: 50px;">
+    
+    <!-- LEFT MENU (SPA Routing Links) -->
+    <div class="profile-menu" style="flex: 1; max-width: 250px;">
+        <ul style="list-style: none; padding: 0;">
+            <li data-tab="profile-card" class="active">Profile</li>
+            <li data-tab="user-uploads">Uploads</li>
+            <li data-tab="favorite">Favorites</li>
+            <li data-tab="settings">Settings</li>
+        </ul>
+    </div>
+    
+    <!-- RIGHT CONTENT (SPA Pages) -->
+    <div class="profile-content" style="flex: 3;">
+        <div class="tab-page" id="profile-card">
+            {% include 'components/SPA-components/profile-card.html' %}
+        </div>
+        <div class="tab-page" id="user-uploads" style="display:none;">
+            {% include 'components/SPA-components/user-uploads.html' %}
+        </div>
+        <div class="tab-page" id="favorite" style="display:none;">
+            {% include 'components/SPA-components/favorite.html' %}
+        </div>
+        <div class="tab-page" id="settings" style="display:none;">
+            {% include 'components/SPA-components/settings.html' %}
+        </div>
+    </div>
+
+</div>
+
+{% include 'components/footer.html' %}
+{% endblock %}

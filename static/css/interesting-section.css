@@ -1,0 +1,42 @@
+/* ---------- INTERESTING SECTION ---------- */
+.interesting-container {
+    margin-top: 120px; /* leave space for fixed navbar */
+    text-align: center;
+    padding: 40px;
+}
+
+.section-title {
+    font-size: 40px;
+    margin-bottom: 40px;
+    font-weight: 700;
+}
+
+.interesting-boxes {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.interesting-box {
+    width: 400px;
+    height: 250px;
+    border-radius: 20px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    color: white;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    font-weight: bold;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.interesting-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}

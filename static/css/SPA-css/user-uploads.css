@@ -1,0 +1,64 @@
+:root {
+  --radius: 16px;
+  --shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.uploads-card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.uploads-card-uploads {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  height: 360px;
+  background: #ddd;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.uploads-card-uploads:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25);
+}
+
+.uploads-card-uploads img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.uploads-card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.05));
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+.uploads-card-text {
+  color: white;
+  text-align: right;
+}
+
+.uploads-card-text h1 {
+  font-size: 20px;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.uploads-card-text p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+}

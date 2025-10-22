@@ -1,0 +1,20 @@
+/* Footer placeholder */
+.footer {
+    padding: 50px;
+    text-align: center;
+    background-color: #222;
+    color: #fff;
+    scroll-snap-align: start; /* snap to top */
+    height: 30vh;
+    scroll-behavior: smooth; /* smooth transition */
+}
+
+.footer-section {
+    padding: 50px;
+    text-align: center;
+    background-color: #222;
+    color: #fff;
+    scroll-snap-align: start; /* snap to top */
+    height: 30vh;
+    scroll-behavior: smooth; /* smooth transition */
+}

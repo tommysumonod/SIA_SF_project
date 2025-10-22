@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block body_class %}snap-scroll{% endblock %}
+{% block content %}
+{% include 'components/navbar.html' %}
+
+{% include 'components/landing-section.html' %}
+{% include 'components/insight.html' %}
+{% include 'components/signup-form.html' with section_id="signup-section" %}
+
+{% include 'components/footer.html' %}
+{% endblock %}

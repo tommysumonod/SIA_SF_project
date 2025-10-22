@@ -1,0 +1,61 @@
+/* Settings Page (Form-like layout) */
+.settings-container{
+	max-width: 800px;
+	margin: 40px auto;
+	padding: 20px;
+	background:#fff;
+	border-radius:12px;
+	box-shadow:0 6px 18px rgba(15,23,42,0.08);
+}
+
+.settings-header{
+	text-align:center;
+	margin-bottom:20px;
+}
+
+.settings-header h2{
+	font-size:28px;
+	color:#111827;
+}
+
+.settings-form{
+	display:flex;
+	flex-direction:column;
+	gap:18px;
+}
+
+.settings-form label{
+	font-weight:600;
+	margin-bottom:6px;
+}
+
+.settings-form input,
+.settings-form select,
+.settings-form textarea{
+	padding:12px;
+	border-radius:8px;
+	border:1px solid #ccc;
+	font-size:16px;
+	width:100%;
+	box-sizing:border-box;
+}
+
+.settings-btn{
+	background:#111827;
+	color:#fff;
+	padding:10px 16px;
+	border-radius:10px;
+	border:none;
+	font-weight:600;
+	cursor:pointer;
+	transition:background-color .3s ease;
+}
+
+.settings-btn:hover{
+	background:#333;
+}
+
+/* Responsive */
+@media(max-width:600px){
+	.settings-container{padding:15px;}
+}

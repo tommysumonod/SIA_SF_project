@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/main-section.css' %}">
+
+<section class="spa-root" style="max-width:1200px;margin:28px auto;padding:0 16px;">
+  <nav class="spa-nav" style="display:flex;gap:8px;align-items:center;margin-bottom:18px;">
+    <a href="#profile" class="spa-link btn">Profile</a>
+    <a href="#favorites" class="spa-link btn btn--outline">Favorites</a>
+    <a href="#uploads" class="spa-link btn btn--outline">Uploads</a>
+    <a href="#settings" class="spa-link btn btn--outline">Settings</a>
+  </nav>
+
+  <div id="spa-view" style="min-height:360px;">
+    <!-- include fragments, hidden by default; router will show/hide -->
+    <div id="route-profile" class="spa-route">{% include 'components/SPA-components/profile-card.html' %}</div>
+    <div id="route-favorites" class="spa-route" style="display:none">{% include 'components/SPA-components/favorite.html' %}</div>
+    <div id="route-uploads" class="spa-route" style="display:none">{% include 'components/SPA-components/user-uploads.html' %}</div>
+    <div id="route-settings" class="spa-route" style="display:none">{% include 'components/SPA-components/settings.html' %}</div>
+  </div>
+</section>
+
+<script src="{% static 'js/spa-router.js' %}"></script>
+{% endblock %}

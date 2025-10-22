@@ -1,0 +1,82 @@
+/* ---------- CATEGORY SECTION ---------- */
+.category-container {
+    text-align: center;
+    padding: 60px 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* 5 boxes per row */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 270px); /* fixed 5 per row */
+    justify-content: center;
+    align-items: center;
+    gap: 18px; /* small gap */
+    margin-top: 40px;
+}
+
+/* Category box */
+.category-box {
+    width: 270px;
+    height: 180px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+    background-size: cover;
+    background-position: center;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+}
+
+
+.category-box:hover {
+    background-color: #ff4d4d;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.category-box h2 {
+    font-size: 18px;
+    margin: 0;
+    font-weight: 600;
+}
+
+/* Hidden categories with smooth animation */
+.hidden {
+    opacity: 0;
+    height: 0;
+    pointer-events: none;
+    transition: all 0.5s ease;
+}
+
+/* Show class for animation */
+.show {
+    opacity: 1;
+    height: 180px;
+    pointer-events: auto;
+}
+
+/* See More button */
+.see-more-btn {
+    margin-top: 25px;
+    padding: 12px 30px;
+    background-color: #ff4d4d;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.see-more-btn:hover {
+    background-color: #d10000;
+    transform: translateY(-3px);
+}

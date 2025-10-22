@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap'); 
+@import url('navbar.css'); /* include navbar styles */
+@import url('footer.css'); /* include footer styles */
+@import url('landing-section.css'); /* include landing section styles */
+@import url('insight.css');  /* include insight section styles */
+@import url('signup-form.css'); /* include signup form styles */
+@import url('auth.css'); /* include auth (signin/signup) styles */
+@import url('interesting-section.css'); /* include interesting section styles */
+@import url('category-section.css'); /* include category section styles */
+
+/* Global resets */
+html, body {
+  font-family: 'DM Sans', sans-serif;
+  margin: 0;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
+  background-color: #fff;
+}
+
+html {
+    overflow-y: hidden; /* prevent horizontal scroll */
+}
+
+body {
+  padding-top: 80px;
+}
+
+/* Form message styles */
+.form-message {
+  text-align: center;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+.form-message.error {
+  color: #ff3b3b;
+}
+
+.form-message.success {
+  color: #28a745;
+}
+
+

@@ -1,0 +1,96 @@
+{% load static %}
+<div class="favorite-card-container" style="padding-top: 80px;">
+  <div class="favorite-card-left"></div>
+
+  <div class="favorite-card-right">
+    <div class="profile-viewer">
+      <label for="profilePicInput" style="cursor:pointer;">
+        <img id="profilePic" src="{{ user.profile_pic_url }}" alt="Profile Picture">
+      </label>
+      <input type="file" id="profilePicInput" name="profile_pic" accept="image/*" hidden>
+      <h1>{{ user.firstname }} {{ user.lastname }}</h1>
+    </div>
+
+    <div class="contents-container" id="profileInfo">
+      <label>Address</label>
+      <p id="addressDisplay">{{ profile_bio.address|default:"Not provided" }}</p>
+      <input type="text" id="addressInput" value="{{ profile_bio.address }}" style="display:none;">
+
+      <label>Email</label>
+      <p id="emailDisplay">{{ user.email }}</p>
+
+      <label>Bio</label>
+      <p id="bioDisplay">{{ profile_bio.bio|default:"No bio available" }}</p>
+      <textarea id="bioInput" style="display:none;">{{ profile_bio.bio }}</textarea>
+
+      <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;">
+        <button id="editBtn">Edit</button>
+        <button id="saveBtn">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('profilePicInput').addEventListener('change', async function() {
+  const file = this.files[0];
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append('profile_pic', file);
+
+  const response = await fetch("{% url 'upload_profile_picture' %}", {
+    method: 'POST',
+    headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+    body: formData
+  });
+
+  const result = await response.json();
+  if (result.success) {
+    const newImageUrl = result.image_url;
+    document.getElementById('profilePic').src = newImageUrl;
+
+    const navbarPic = document.querySelector('.navbar .profile-pic');
+    if (navbarPic) navbarPic.src = newImageUrl;
+  } else {
+    alert("Upload failed: " + (result.error || "Unknown error"));
+  }
+});
+
+const editBtn = document.getElementById('editBtn');
+const saveBtn = document.getElementById('saveBtn');
+
+editBtn.addEventListener('click', () => toggleEditMode(true));
+
+saveBtn.addEventListener('click', async () => {
+  const formData = new FormData();
+  formData.append('address', document.getElementById('addressInput').value);
+  formData.append('bio', document.getElementById('bioInput').value);
+
+  const response = await fetch("{% url 'update_profile_bio' %}", {
+    method: 'POST',
+    headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+    body: formData
+  });
+
+  const result = await response.json();
+  if (result.success) {
+    document.getElementById('addressDisplay').textContent = formData.get('address');
+    document.getElementById('bioDisplay').textContent = formData.get('bio');
+    toggleEditMode(false);
+  } else {
+    alert("Update failed: " + (result.error || "Unknown error"));
+  }
+});
+
+function toggleEditMode(editing) {
+  const displayEls = ['addressDisplay', 'bioDisplay'];
+  const inputEls = ['addressInput', 'bioInput'];
+
+  displayEls.forEach(id => document.getElementById(id).style.display = editing ? 'none' : 'block');
+  inputEls.forEach(id => document.getElementById(id).style.display = editing ? 'block' : 'none');
+
+  editBtn.style.display = editing ? 'none' : 'inline-block';
+  saveBtn.style.display = editing ? 'inline-block' : 'none';
+}
+</script>

@@ -1,0 +1,54 @@
+/* Insight Containers */
+.insight-container {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin-bottom: 20px;
+}
+
+.insight-container-1,
+.insight-container-2,
+.insight-container-3 {
+    height: 100vh;
+    padding: 0 0px; /* horizontal padding is okay */
+    box-sizing: border-box;
+    display: flex;
+    gap: 30px;
+    align-items: stretch;
+    font-family: initial !important;
+}
+
+
+.text-container-2 {
+    flex: 1;                   /* take equal space with image */
+    display: flex;             /* make it a flex container */
+    flex-direction: column;    /* stack h1 and p vertically */
+    justify-content: center; 
+    padding: 50px;  /* center vertically */
+}
+
+.image-container-1 img,
+.image-container-2 img,
+.image-container-3 img {
+    max-height: 100%;
+    object-fit: cover;
+}
+
+
+.insight-container h1{
+    font-size: 100px;
+    font-weight: 600;
+}
+
+.insight-container p{
+    font-size: 20px;
+}
+
+.image-container-1 img,
+.image-container-2 img,
+.image-container-3 img {
+    width: 100%;
+    height: 100%;              /* fill container vertically */
+    object-fit: cover;         /* maintain aspect ratio, cover entire area */
+    border-radius: 0px;
+}

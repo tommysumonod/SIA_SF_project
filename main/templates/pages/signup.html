@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% include 'components/navbar.html' %}
+
+<div id="signup-section" class="auth-form-container">
+  <div class="auth-left">
+    <h1>Create your account and showcase your Art</h1>
+  </div>
+
+  <div class="auth-right">
+    <form method="POST" action="{% url 'signup' %}">
+      {% csrf_token %}
+
+      <div class="auth-header">
+        <h2>Welcome to Solid Forge</h2>
+        <p>Solid ideas. Forged in creativity.</p>
+      </div>
+
+      {% if messages %}
+        {% for message in messages %}
+          <p class="form-message {{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+      {% endif %}
+
+      <div class="input-group">
+        <label for="email"><b>Email</b></label>
+        <input type="email" id="email" name="signupEmail" placeholder="Email" required>
+      </div>
+
+      <div class="input-group">
+        <label for="firstname"><b>First name</b></label>
+        <input type="text" id="firstname" name="firstname" placeholder="First name" required>
+      </div>
+
+      <div class="input-group">
+        <label for="lastname"><b>Last name</b></label>
+        <input type="text" id="lastname" name="lastname" placeholder="Last name" required>
+      </div>
+
+      <div class="input-group">
+        <label for="password"><b>Password</b></label>
+        <input type="password" id="password" name="signupPassword" placeholder="Password" required>
+      </div>
+
+      <div class="input-group">
+        <label for="birthdate"><b>Birthdate</b></label>
+        <input type="date" id="birthdate" name="birthdate" required>
+      </div>
+
+      <p class="hint">Use 8 or more letters, numbers, and symbols</p>
+      <button type="submit" class="auth-btn">Sign Up</button>
+
+      {% if not user %}
+      <p class="redirect-text">
+        Already a member? <a href="{% url 'signin' %}">Log In</a>
+      </p>
+      {% endif %}
+    </form>
+  </div>
+</div>
+
+<script>
+document.querySelector('form').addEventListener('submit', function(e) {
+  const email = this.querySelector('input[type="email"]').value.trim();
+  const pass = this.querySelector('input[type="password"]').value.trim();
+
+  if (!email || !pass) {
+    e.preventDefault();
+    alert("Please fill in all required fields.");
+  } else if (pass.length < 8) {
+    e.preventDefault();
+    alert("Password must be at least 8 characters long.");
+  }
+});
+</script>
+
+
+{% endblock %}

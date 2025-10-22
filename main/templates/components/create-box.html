@@ -1,0 +1,24 @@
+{% load static %}
+<div class="create-box-container">
+    <div class="create-box-left">
+        <div class="upload-image-container">
+            <label for="image">Upload an Image</label>
+            <input type="file" id="image" alt="Upload Image">
+        </div>
+    </div>
+
+    <div class="create-box-right">
+        
+        <input type="text" id="imtitleage" placeholder="Title">
+        <input type="text" id="imtitleage" placeholder="discription">
+
+        <label for="category">Choose a category:</label>
+        <select id="category" name="category">
+            <option value="">-- Select a Category --</option>
+            <option value="art">Art</option>
+            <option value="fashion">Fashion</option>
+            <option value="furniture">Furniture</option>
+            <option value="gadgets">Gadgets</option>
+        </select>
+    </div>
+</div>
