@@ -335,35 +335,26 @@ def logout_view(request):
     return redirect('hero')
 
 #-----------------upload profile pic -----------------#
-@require_POST
-@login_required
-def update_profile_pic(request):
-    user = request.user
-    if "profile_pic" in request.FILES:
-        user.profile_pic = request.FILES["profile_pic"]
-        user.save()
-        return JsonResponse({
-            "success": True,
-            "profile_pic_url": user.profile_pic.url
-        })
-    return JsonResponse({
-        "success": True,
-        "error": "No image provided."
-    })
 
 @require_POST
 def update_profile_pic(request):
+    """Handle uploading or updating user's profile picture."""
     if "user_uid" not in request.session:
         return JsonResponse({"success": False, "error": "Not logged in"}, status=401)
 
     user = get_object_or_404(Users, uid=request.session["user_uid"])
 
     if "profile_pic" in request.FILES:
+        # Save the uploaded image
         user.profile_pic = request.FILES["profile_pic"]
         user.save()
-        return JsonResponse({"success": True, "profile_pic_url": user.profile_pic.url})
+        return JsonResponse({
+            "success": True,
+            "profile_pic_url": user.profile_pic.url
+        })
 
     return JsonResponse({"success": False, "error": "No image provided"})
+
 
 
 # ---------------- CHAT ---------------- #

@@ -3,6 +3,8 @@
 <div class="profile-card-container">
   <div class="profile-card-content">
     <div class="profile-card-right">
+      <form>
+        {% csrf_token %}
       <div class="profile-viewer">
         {% if is_owner %}
           <label for="profilePicInput" style="cursor:pointer;">
@@ -27,7 +29,7 @@
           </div>
         {% endif %}
       </div>
-
+      </form>
       <div class="contents-container" id="profileInfo">
         <label>Address</label>
         <p id="addressDisplay">{{ profile_bio.address|default:"Not provided" }}</p>
@@ -54,3 +56,43 @@
     </div>
   </div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.getElementById("profilePicInput");
+  const preview = document.getElementById("profilePic");
+  const uploadMessage = document.getElementById("uploadMessage");
+
+  if (!input) return;
+
+  input.addEventListener("change", () => {
+    const file = input.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("profile_pic", file);
+
+    fetch("{% url 'update_profile_pic' %}", {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": document.querySelector('[name=csrfmiddlewaretoken]').value,
+      },
+      body: formData,
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          preview.src = data.profile_pic_url;
+          uploadMessage.textContent = "✅ Profile picture updated!";
+          uploadMessage.style.color = "green";
+        } else {
+          uploadMessage.textContent = "❌ " + data.error;
+          uploadMessage.style.color = "red";
+        }
+      })
+      .catch(() => {
+        uploadMessage.textContent = "❌ Upload failed. Try again.";
+        uploadMessage.style.color = "red";
+      });
+  });
+});
+</script>

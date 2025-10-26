@@ -12,7 +12,7 @@ urlpatterns = [
     # Profile updates
     path("upload-profile-picture/", views.upload_profile_picture, name="upload_profile_picture"),
     path("update-profile-bio/", views.update_profile_bio, name="update_profile_bio"),
-    path("update-profile-pic/", views.update_profile_pic, name="update_profile_pic"),
+    path('update_profile_pic/', views.update_profile_pic, name='update_profile_pic'),
 
     # ---------------- GALLERY / UPLOADS ---------------- #
     path('gallery/', views.gallery, name='gallery'),
