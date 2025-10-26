@@ -17,3 +17,16 @@
         <button class="see-more-btn" id="seeMoreBtn">See More</button>
     </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const categoryBoxes = document.querySelectorAll(".category-box");
+  categoryBoxes.forEach(box => {
+    box.addEventListener("click", () => {
+      const categoryName = box.querySelector("h2").textContent.trim();
+      const urlCategory = encodeURIComponent(categoryName);
+      window.location.href = `/category/${urlCategory}/`;
+    });
+  });
+});
+</script>

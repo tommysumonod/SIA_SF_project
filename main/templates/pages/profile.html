@@ -3,13 +3,18 @@
 {% include 'components/navbar-search.html' %}
 
 <div class="profile-container" style="display: flex; gap: 30px; margin: 50px;">
-    
+    <button class="back-btn" onclick="history.back()" style="margin-top: 228px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 18l-6-6 6-6"></path>
+          </svg>
+    </button>
     <!-- LEFT MENU (SPA Routing Links) -->
-    <div class="profile-menu" style="flex: 1; max-width: 250px;">
+    <div class="profile-menu" style="flex: 1; max-width: 250px; padding-top: 158px;">
+        
+
         <ul style="list-style: none; padding: 0;">
             <li data-tab="profile-card" class="active">Profile</li>
             <li data-tab="user-uploads">Uploads</li>
-            <li data-tab="favorite">Favorites</li>
             <li data-tab="settings">Settings</li>
         </ul>
     </div>
@@ -22,9 +27,6 @@
         <div class="tab-page" id="user-uploads" style="display:none;">
             {% include 'components/SPA-components/user-uploads.html' %}
         </div>
-        <div class="tab-page" id="favorite" style="display:none;">
-            {% include 'components/SPA-components/favorite.html' %}
-        </div>
         <div class="tab-page" id="settings" style="display:none;">
             {% include 'components/SPA-components/settings.html' %}
         </div>
@@ -33,4 +35,23 @@
 </div>
 
 {% include 'components/footer.html' %}
+<script>
+// activate profile SPA tab based on hash
+document.addEventListener('DOMContentLoaded', function(){
+    function activateTab(tabId){
+        const tabs = document.querySelectorAll('.profile-menu ul li');
+        tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === tabId));
+        const pages = document.querySelectorAll('.tab-page');
+        pages.forEach(p => p.style.display = (p.id === tabId) ? 'block' : 'none');
+    }
+
+    // click handlers for menu items
+    document.querySelectorAll('.profile-menu ul li').forEach(li => {
+        li.addEventListener('click', () => { activateTab(li.dataset.tab); history.replaceState(null, '', '#' + li.dataset.tab); });
+    });
+
+    const hash = window.location.hash.replace('#','');
+    if (hash) activateTab(hash);
+});
+</script>
 {% endblock %}

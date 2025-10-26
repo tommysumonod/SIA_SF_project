@@ -1,6 +1,151 @@
-{% extends 'base.html' %}
+{% extends 'base-section.html' %}
+{% load static %}
 {% block content %}
 {% include 'components/navbar-search.html' %}
+<link rel="stylesheet" href="{% static 'css/chat.css' %}">
+
+<div class="chat-container">
+  <!-- Sidebar: user list -->
+  <aside class="chat-users">
+    <div class="users-header">
+      <h3>Messages</h3>
+      <input type="search" placeholder="Find users or messages..." id="chat-search">
+    </div>
+
+    <ul class="users-list">
+      {% if conversations %}
+        {% for convo in conversations %}
+          {% with other_user=convo.other_user %}
+            <li class="user-item {% if selected_user and selected_user.uid == other_user.uid %}active{% endif %}" data-uid="{{ other_user.uid }}">
+              {% if other_user and other_user.uid %}
+                <a href="{% url 'chat_with_user' other_user.uid %}" style="display:flex; align-items:center; gap:12px; width:100%; text-decoration:none; color:inherit;">
+                  <img src="{{ other_user.profile_pic_url|default:'/static/images/default-avatar.png' }}" alt="avatar" class="user-avatar">
+                  <div class="user-meta">
+                    <div class="user-name">{{ other_user.firstname }} {{ other_user.lastname }}</div>
+                    <div class="user-last">{{ convo.last_message|default:"No messages yet." }}</div>
+                  </div>
+                  {% if convo.unread_count and convo.unread_count > 0 %}
+                    <div class="user-badge">{{ convo.unread_count }}</div>
+                  {% endif %}
+                </a>
+              {% else %}
+                <div class="user-meta">
+                  <div class="user-name">Unknown User</div>
+                  <div class="user-last">{{ convo.last_message|default:"No messages yet." }}</div>
+                </div>
+              {% endif %}
+            </li>
+          {% endwith %}
+        {% endfor %}
+      {% else %}
+        <li class="user-item empty" style="text-align:center; color:var(--muted);">
+          No conversations yet.
+        </li>
+      {% endif %}
+    </ul>
+  </aside>
+
+  <!-- Chat panel -->
+  <section class="chat-panel">
+    {% if target_user %}
+      <header class="chat-header">
+        <div class="chat-recipient">
+          {% if target_user.uid %}
+            <a href="{% url 'view_profile' target_user.uid %}">
+              <img src="{{ target_user.profile_pic_url|default:'/static/images/default-avatar.png' }}" alt="avatar" class="user-avatar small">
+            </a>
+          {% else %}
+            <img src="{% static 'images/default-avatar.png' %}" alt="avatar" class="user-avatar small">
+          {% endif %}
+          <div class="recipient-meta">
+            <div class="recipient-name">{{ target_user.firstname }} {{ target_user.lastname }}</div>
+            <div class="recipient-status">Online</div>
+          </div>
+        </div>
+      </header>
+
+      <main class="chat-messages" id="messages">
+        <ul class="messages-list">
+          {% if messages %}
+            {% for msg in messages %}
+              <li class="message {% if msg.sender_uid.uid == user.uid %}message-sent{% else %}message-received{% endif %}">
+                <div class="bubble">{{ msg.message }}</div>
+                <div class="ts">{{ msg.created_at|date:"H:i" }}</div>
+              </li>
+            {% endfor %}
+          {% else %}
+            <li class="no-messages" style="text-align:center; color:var(--muted); margin-top:50px;">
+              No messages yet. Say hello 👋
+            </li>
+          {% endif %}
+        </ul>
+      </main>
+
+      <footer class="chat-input">
+        <form method="POST" action="{% url 'send_message' selected_user.uid %}" id="chatForm" style="display:flex; gap:8px; width:100%;">
+          {% csrf_token %}
+          <textarea name="message" id="chatText" placeholder="Type a message..." required></textarea>
+          <button type="submit" id="sendBtn">Send</button>
+        </form>
+      </footer>
+
+    {% else %}
+      <div class="chat-empty" style="display:flex; align-items:center; justify-content:center; height:100%;">
+        <p style="color:var(--muted); font-size:16px;">Select a user to start chatting 💬</p>
+      </div>
+    {% endif %}
+  </section>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.querySelector('.chat-input form');
+  const textarea = document.querySelector('#chatText');
+  const messagesList = document.querySelector('.messages-list');
+
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const url = form.getAttribute('action');
+    const messageText = textarea.value.trim();
+
+    if (!messageText) return;
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // ✅ Add the new message instantly
+        const newMessage = document.createElement('li');
+        newMessage.className = 'message message-sent';
+        newMessage.innerHTML = `
+          <div class="bubble">${data.message}</div>
+          <div class="ts">${data.timestamp}</div>
+        `;
+        messagesList.appendChild(newMessage);
+
+        textarea.value = '';
+        messagesList.scrollTop = messagesList.scrollHeight; // auto scroll
+      } else {
+        console.error('Send failed:', data.error);
+      }
+    } catch (err) {
+      console.error('Error sending message:', err);
+    }
+  });
+});
+</script>
+
 
 
 

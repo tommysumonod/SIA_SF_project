@@ -1,0 +1,107 @@
+{% extends 'base-section.html' %}
+{% load static %}
+{% block content %}
+{% include 'components/navbar-search.html' %}
+
+<link rel="stylesheet" href="{% static 'css/upload-view.css' %}">
+
+<div class="upload-container">
+  <div class="upload-content">
+    
+    <!-- LEFT: Art Section -->
+    <section class="art-section">
+      <div class="art-frame">
+        <img src="{{ art.image_url }}" alt="{{ art.title }}" class="art-image">
+
+        <div class="art-info">
+          {% if can_edit %}
+            <!-- Editable form -->
+            <form id="editArtForm" method="POST" action="{% url 'edit_art' art.art_id %}">
+              {% csrf_token %}
+              <input 
+                type="text" 
+                name="title" 
+                value="{{ art.title }}" 
+                class="input-title" 
+                placeholder="Enter title..."
+                required
+              >
+              
+              <textarea 
+                name="description" 
+                class="input-desc" 
+                placeholder="Enter description..."
+                required
+              >{{ art.description }}</textarea>
+
+              <select name="category" class="input-select" required>
+                <option value="3D Art" {% if art.category == "3D Art" %}selected{% endif %}>3D Art</option>
+                <option value="2D Art" {% if art.category == "2D Art" %}selected{% endif %}>2D Art</option>
+                <option value="Pixel Art" {% if art.category == "Pixel Art" %}selected{% endif %}>Pixel Art</option>
+                <option value="Concept Art" {% if art.category == "Concept Art" %}selected{% endif %}>Concept Art</option>
+                <option value="Illustration" {% if art.category == "Illustration" %}selected{% endif %}>Illustration</option>
+                <option value="Sculptures" {% if art.category == "Sculptures" %}selected{% endif %}>Sculptures</option>
+                <option value="Motion Graphics" {% if art.category == "Motion Graphics" %}selected{% endif %}>Motion Graphics</option>
+                <option value="Animation" {% if art.category == "Animation" %}selected{% endif %}>Animation</option>
+                <option value="Photography" {% if art.category == "Photography" %}selected{% endif %}>Photography</option>
+                <option value="Game Assets" {% if art.category == "Game Assets" %}selected{% endif %}>Game Assets</option>
+              </select>
+
+              <button type="submit" class="save-btn">💾 Save</button>
+            </form>
+          {% else %}
+            <h2 class="art-title">{{ art.title }}</h2>
+            <p class="art-category">{{ art.category }}</p>
+            <p class="art-description">{{ art.description }}</p>
+          {% endif %}
+        </div>
+
+        <!-- ✅ FIXED: Uploader Info -->
+        <div class="uploader-box">
+          <a href="{% url 'view_profile' uid=uploader.uid %}#profile-card" class="btn btn--profile">
+            <img src="{{ uploader.profile_pic_url }}" alt="avatar" class="uploader-avatar">
+            <div class="uploader-info">
+              <div class="uploader-name">{{ uploader.firstname }} {{ uploader.lastname }}</div>
+              <div class="uploader-hint">View profile</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: Comments Section -->
+    <aside class="comments-section">
+      <h3>Comments</h3>
+      <div class="comments-scroll" id="commentsList">
+        {% for c in comments %}
+          <div class="comment">
+            <a href="{% url 'view_profile' c.uid.uid %}#profile-card" class="comment-user">
+              <img src="{{ c.uid.profile_pic_url }}" class="comment-avatar" alt="avatar">
+              <span class="comment-name">{{ c.uid.firstname }} {{ c.uid.lastname }}</span>
+            </a>
+            <div class="comment-text">
+              <p>{{ c.comment_text }}</p>
+              <span class="comment-time">{{ c.created_at|date:"M d, Y H:i" }}</span>
+            </div>
+          </div>
+        {% empty %}
+          <p class="no-comments">No comments yet. Be the first to comment!</p>
+        {% endfor %}
+      </div>
+
+      {% if user.is_authenticated %}
+        <form id="commentForm" method="POST" action="{% url 'post_comment' art.art_id %}" class="comment-form">
+          {% csrf_token %}
+          <textarea name="comment" id="commentText" placeholder="Write a comment..." required></textarea>
+          <button type="submit" id="commentSubmit">💬 Post</button>
+        </form>
+      {% else %}
+        <p class="login-note">You must be logged in to comment.</p>
+      {% endif %}
+    </aside>
+
+  </div>
+</div>
+
+{% include 'components/footer.html' %}
+{% endblock %}

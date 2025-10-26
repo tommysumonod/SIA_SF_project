@@ -19,7 +19,7 @@ html, body {
 }
 
 html {
-    overflow-y: hidden; /* prevent horizontal scroll */
+    overflow-y: auto; /* prevent horizontal scroll */
 }
 
 body {

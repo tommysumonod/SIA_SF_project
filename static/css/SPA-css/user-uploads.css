@@ -1,30 +1,61 @@
 :root {
   --radius: 16px;
   --shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  --card-min-width: 300px;
 }
 
+/* Outer wrapper should allow scrolling */
+.uploads-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background: #fafafa;
+  overflow-y: auto; /* ✅ Enable scrolling */
+}
+
+/* Inner grid container */
 .uploads-card-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(var(--card-min-width), 1fr));
+  gap: 28px 24px;
   padding: 40px;
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 1600px;
+  box-sizing: border-box;
+  margin-top: 100px;
 }
 
+/* Scrollbar styling (works on Chrome, Edge, Safari) */
+.uploads-wrapper::-webkit-scrollbar {
+  width: 10px;
+}
+.uploads-wrapper::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+.uploads-wrapper::-webkit-scrollbar-thumb {
+  background: #bbb;
+  border-radius: 10px;
+}
+.uploads-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+/* Individual art cards */
 .uploads-card-uploads {
   position: relative;
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow);
-  height: 360px;
   background: #ddd;
+  height: 340px;
   cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .uploads-card-uploads:hover {
-  transform: translateY(-8px);
+  transform: translateY(-6px);
   box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25);
 }
 
@@ -34,12 +65,10 @@
   object-fit: cover;
 }
 
+/* Overlay */
 .uploads-card-overlay {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
+  inset: 0;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.05));
   display: flex;
   align-items: flex-end;
@@ -61,4 +90,27 @@
 .uploads-card-text p {
   font-size: 14px;
   color: rgba(255, 255, 255, 0.85);
+}
+
+/* Empty state */
+.uploads-empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #666;
+  padding: 60px 20px;
+}
+
+.upload-link {
+  display: inline-block;
+  margin-top: 12px;
+  background: #ff4d4d;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.upload-link:hover {
+  background: #e13c3c;
 }

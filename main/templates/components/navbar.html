@@ -18,11 +18,11 @@
         {% if user %}
             <div class="profile-info">
                 <a href="{% url 'profile' %}#profile-card">
-                    <img 
-                        src="{{ user.profile_pic.url|default:'https://cdn-icons-png.flaticon.com/128/149/149071.png' }}" 
-                        alt="Profile" 
-                        class="profile-pic"
-                    >
+                    {% if user.profile_pic %}
+                      <img src="{{ user.profile_pic.url }}" alt="Profile" class="profile-pic">
+                    {% else %}
+                      <img src="https://cdn-icons-png.flaticon.com/128/149/149071.png" alt="Default Profile" class="profile-pic">
+                    {% endif %}
                 </a>
                 <span>
                     {% if user.firstname or user.lastname %}

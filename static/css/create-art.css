@@ -1,0 +1,189 @@
+:root {
+  --card-bg: #ffffff;
+  --muted: #6b7280;
+  --shadow: 0 6px 18px rgba(15,23,42,0.08);
+  --radius: 12px;
+}
+
+/* 🌟 Layout */
+.create-art-container {
+  position: relative;
+  display: flex;
+  grid-template-columns: 1fr 380px;
+  gap: 30px;
+  align-items: center;      /* vertically center the two grid columns */
+  justify-content: center;  /* horizontally center the grid */
+  max-width: 1500px;
+  margin: 0 auto;           /* centers the container itself */
+  padding: 40px 20px;
+  min-height: 100vh;        /* take full screen height */
+  background: #f3f4f6;      /* optional soft background for contrast */
+}
+
+
+/* 🔙 Back Button */
+.back-btn {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #111827;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s ease-in-out;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  margin-top: 100px;
+}
+
+.back-btn:hover {
+  background: #1f2937;
+  transform: translateY(-2px);
+}
+
+.back-btn svg {
+  stroke: #fff;
+}
+
+/* 🖼️ Upload Container */
+.create-box-container {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 30px;
+  width: 100%;
+  padding: 30px;
+}
+
+.create-box-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.upload-image-container {
+  background: #f9fafb;
+  border: 2px dashed #d1d5db;
+  border-radius: var(--radius);
+  padding: 40px 20px;
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+.upload-image-container:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.upload-label svg {
+  transition: transform 0.2s;
+}
+
+.upload-image-container:hover svg {
+  transform: scale(1.1);
+}
+
+.upload-image-container p {
+  color: var(--muted);
+  margin-top: 12px;
+  font-size: 16px;
+}
+
+.drag-over {
+  background: #e5e7eb;
+  border-color: #6b7280;
+}
+
+/* Preview Image */
+.preview-img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 600px;
+  object-fit: contain;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: all 0.2s ease-in-out;
+}
+
+/* 📝 Form Inputs */
+.create-box-right {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+}
+
+.create-box-right input[type="text"],
+.create-box-right textarea,
+.create-box-right select {
+  width: 100%;
+  padding: 10px 14px 10px 14px;
+  border-radius: var(--radius);
+  border: 1px solid #e5e7eb;
+  font-size: 15px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.create-box-right #imdesc, #imtitleage{
+    width: 90%;
+    padding: 10px 14px 10px 14px;
+    border-radius: var(--radius);
+    border: 1px solid #e5e7eb;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    margin: 5px;
+}
+
+#imdesc{
+    height: 128px;
+}
+
+.create-box-right label {
+  font-weight: 600;
+  color: #111827;
+}
+
+.create-box-right button{
+  padding: 14px;
+  background: #ff4d4d;
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  margin-top: 18px;
+  
+}
+
+/* 📱 Responsive */
+@media (max-width: 900px) {
+  .create-art-container {
+    grid-template-columns: 1fr;
+  }
+  .create-box-container {
+    grid-template-columns: 1fr;
+  }
+}

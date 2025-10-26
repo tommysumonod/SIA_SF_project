@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap'); 
 @import url('footer.css'); /* include footer styles */
-@import url('signup-form.css'); /* include signup form styles */
 @import url('auth.css'); /* include auth (signin/signup) styles */
 @import url('interesting-section.css'); /* include interesting section styles */
 @import url('category-section.css'); /* include category section styles */
@@ -10,13 +9,17 @@
 @import url('SPA-css/user-uploads.css'); /* include user uploads styles */
 @import url('SPA-css/spa-container.css'); /* include SPA container styles */
 @import url('SPA-css/navbar-section.css'); /* include navbar styles */
+@import url('create-art.css'); /* include create art styles */
+@import url('upload-view.css'); /* include upload view styles */
+@import url('user-uploads.css');
 
-
+chat.css
 html, body {
   font-family: 'DM Sans', sans-serif;
   margin: 0;
   scroll-behavior: smooth;
   overflow-x: hidden;
+  overflow-y: auto; /* ✅ allow vertical scroll */
   width: 100%;
   background-color: #fff;
 }

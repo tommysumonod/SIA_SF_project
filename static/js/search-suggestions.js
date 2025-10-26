@@ -39,9 +39,4 @@ clearBtn.addEventListener("click", () => {
   clearBtn.style.display = "none";
 });
 
-input.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    alert(`Search for: ${input.value}`);
-    suggestions.style.display = "none";
-  }
-});
+

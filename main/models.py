@@ -3,8 +3,8 @@ from django.db import models
 class Users(models.Model):
     uid = models.CharField(primary_key=True, max_length=50)
     username = models.CharField(max_length=50, unique=True)
-    firstname = models.CharField(max_length=50, unique=True, null=True, blank=True)
-    lastname = models.CharField(max_length=50, unique=True, null=True, blank=True)
+    firstname = models.CharField(max_length=50, null=True, blank=True)  # ✅ removed unique=True
+    lastname = models.CharField(max_length=50, null=True, blank=True)   # ✅ removed unique=True
     email = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=255)
     profile_pic = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
@@ -22,6 +22,7 @@ class Users(models.Model):
 
     def __str__(self):
         return self.username
+
 
 
 class ProfileBio(models.Model):
@@ -43,17 +44,46 @@ class ProfileBio(models.Model):
         return f"{self.profile_uid.username}'s Profile"
 
 
+from django.db import models
+
 class Arts(models.Model):
+    CATEGORY_CHOICES = [
+        ('3D Art', '3D Art'),
+        ('2D Art', '2D Art'),
+        ('Pixel Art', 'Pixel Art'),
+        ('Concept Art', 'Concept Art'),
+        ('Illustration', 'Illustration'),
+        ('Sculptures', 'Sculptures'),
+        ('Motion Graphics', 'Motion Graphics'),
+        ('Animation', 'Animation'),
+        ('Photography', 'Photography'),
+        ('Game Assets', 'Game Assets'),
+    ]
+
     art_id = models.CharField(primary_key=True, max_length=50)
-    uid = models.ForeignKey(Users, to_field='uid', db_column='uid', on_delete=models.CASCADE)
+    uid = models.ForeignKey(
+        'Users',
+        to_field='uid',
+        db_column='uid',
+        on_delete=models.CASCADE
+    )
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     image_url = models.CharField(max_length=255)
+    category = models.CharField(
+        max_length=50,
+        choices=CATEGORY_CHOICES,
+        default='2D Art'  # You can change this default
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         managed = True
         db_table = 'arts'
+
+    def __str__(self):
+        return f"{self.title} ({self.category})"
+
 
 
 class Comments(models.Model):
