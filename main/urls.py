@@ -24,6 +24,8 @@ urlpatterns = [
     path('uploads/', views.all_uploads, name='all_uploads'),
     path('search/', views.search_artworks, name='search_artworks'),
     path('category/<str:category_name>/', views.category_view, name='category_view'),
+    path('art/<str:art_id>/delete/', views.delete_art, name='delete_art'),
+
 
     # ---------------- AUTH ---------------- #
     path('signup/', views.signup_view, name='signup'),

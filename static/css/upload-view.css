@@ -91,6 +91,22 @@ html, body {
   font-weight: 600;
 }
 
+.delete-btn {
+  background: #e63946;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 8px;
+  transition: background 0.2s;
+}
+.delete-btn:hover {
+  background: #c82333;
+}
+
+
 /* Uploader */
 .uploader-box {
   margin-top: 16px;

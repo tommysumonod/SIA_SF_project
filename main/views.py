@@ -259,6 +259,27 @@ def edit_art(request, art_id):
     messages.success(request, 'Art updated successfully!')
     return redirect('upload_view', art_id=art.art_id)
 
+@require_POST
+def delete_art(request, art_id):
+    """Delete uploaded art (only by owner)."""
+    art = get_object_or_404(Arts, art_id=art_id)
+
+    # Ensure the user owns this art
+    if 'user_uid' not in request.session or request.session['user_uid'] != art.uid.uid:
+        messages.error(request, 'Unauthorized.')
+        return redirect('gallery')
+
+    # Delete the image file (optional but nice to have)
+    if art.image_url and art.image_url.startswith(settings.MEDIA_URL):
+        image_path = art.image_url.replace(settings.MEDIA_URL, '')
+        if default_storage.exists(image_path):
+            default_storage.delete(image_path)
+
+    art.delete()
+    messages.success(request, 'Artwork deleted successfully!')
+    return redirect('profile')
+
+
 
 def category_view(request, category_name):
     """Filter uploads by category."""
